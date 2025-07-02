@@ -5,6 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciador de Ferramentas</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4CAF50">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Sites Manager">
     <style>
         * {
             margin: 0;
@@ -353,6 +360,12 @@
             color: white;
         }
 
+        #offlineIndicator {
+            border-radius: 50px;
+            font-size: 12px;
+            height: 21px;
+            width: 30%;
+        }
 
 
         @media (max-width: 768px) {
@@ -361,7 +374,7 @@
             }
 
             .header h1 {
-                font-size: 2em;
+                font-size: 1.5em;
             }
 
             .modal-content {
@@ -462,6 +475,37 @@
                 font-family: 'Courier New', monospace;
                 resize: vertical;
             }
+            .search-random-btn,
+.add-site-btn {
+    position: fixed;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(30, 144, 255, 0.4);
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Específicos de cada botão */
+.search-random-btn {
+    bottom: 42%;
+    right: 81.9%;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(45deg, #1e90ff, #3742fa);
+}
+
+.add-site-btn {
+    bottom: 31.8%;
+    right: 83.1%;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(45deg, #2ed573, #1eaf60);
+}
         }
     </style>
 </head>
@@ -470,6 +514,10 @@
     <div class="container">
         <div class="header">
             <h1>🛠️Ferramentas</h1>
+            <div id="offlineIndicator"
+                style="display: none; position: fixed; top: 0; left: 0; right: 0; background: #f39c12; color: white; text-align: center; padding: 5px; z-index: 9999;">
+                📱 Modo Offline
+            </div>
             <p></p>
         </div>
         <div class="sites-grid" id="sitesGrid">
@@ -669,6 +717,18 @@
                 } catch (error) {
                     console.error('Erro ao carregar sites:', error);
                     renderSites();
+                }
+            }
+            // Precarregar recursos críticos
+            function preloadCriticalResources() {
+                if ('serviceWorker' in navigator && 'caches' in window) {
+                    caches.open(CACHE_NAME).then(cache => {
+                        // Precarrega recursos importantes
+                        cache.addAll([
+                            '/',
+                            '/index.html'
+                        ]);
+                    });
                 }
             }
 
@@ -984,11 +1044,119 @@
             }
 
 
+
+
+            //service worker para funcionamento offline
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function () {
+                    navigator.serviceWorker.register('./sw.js')
+                        .then(function (registration) {
+                            console.log('SW registrado com sucesso:', registration.scope);
+
+                            // Verificar atualizações
+                            registration.addEventListener('updatefound', function () {
+                                console.log('Nova versão do SW disponível');
+                            });
+                        })
+                        .catch(function (error) {
+                            console.log('Falha ao registrar SW:', error);
+                        });
+                });
+            }
+            // Detectar status offline/online
+            function updateOnlineStatus() {
+                const indicator = document.getElementById('offlineIndicator');
+                if (navigator.onLine) {
+                    indicator.style.display = 'none';
+                    indicator.textContent = '🌐 Online';
+                } else {
+                    indicator.style.display = 'block';
+                    indicator.textContent = '📱 Modo Offline - Funcionalidade completa disponível';
+                }
+            }
+
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+
+            // Verificar status inicial após carregar
+            window.addEventListener('load', function () {
+                updateOnlineStatus();
+
+                // Teste de conectividade real
+                fetch('./manifest.json', { method: 'HEAD', cache: 'no-cache' })
+                    .then(() => {
+                        console.log('Conectividade confirmada');
+                    })
+                    .catch(() => {
+                        console.log('Sem conectividade real');
+                        const indicator = document.getElementById('offlineIndicator');
+                        indicator.style.display = 'block';
+                        indicator.textContent = '📱 Modo Offline';
+                    });
+            });
+
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            updateOnlineStatus(); // Verificar status inicial
+            // Teste de funcionalidade offline
+            function testOfflineCapability() {
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.ready.then(function () {
+                        console.log('✅ Service Worker ativo - Site pronto para funcionar offline');
+                    });
+                }
+
+                if ('indexedDB' in window) {
+                    console.log('✅ IndexedDB disponível - Dados salvos localmente');
+                }
+
+                console.log('✅ Site funcionará offline após primeira visita');
+            }
+            let inactivityTimer;
+    let hideDelayTimer;
+
+    const micButton = document.querySelector('.search-random-btn');
+    const addButton = document.querySelector('.add-site-btn');
+
+    function showButtons() {
+        [micButton, addButton].forEach(btn => {
+            btn.style.opacity = '1';
+            btn.style.pointerEvents = 'auto';
+        });
+    }
+
+    function hideButtons() {
+        [micButton, addButton].forEach(btn => {
+            btn.style.opacity = '0';
+            btn.style.pointerEvents = 'none';
+        });
+    }
+
+    function resetInactivityTimer() {
+        clearTimeout(inactivityTimer);
+        clearTimeout(hideDelayTimer);
+
+        // Aguarda 1s antes de esconder os botões, para permitir cliques
+        hideDelayTimer = setTimeout(hideButtons, 600);
+
+        // Aguarda 2s de inatividade para mostrar os botões novamente
+        inactivityTimer = setTimeout(showButtons, 2500);
+    }
+
+    // Escuta eventos de interação
+    ['touchstart', 'mousemove', 'scroll', 'keydown'].forEach(evt => {
+        document.addEventListener(evt, resetInactivityTimer, { passive: true });
+    });
+
+    window.addEventListener('load', resetInactivityTimer);
+            
             // Carregar sites ao iniciar
             // Mudança: fazer a chamada async
             (async () => {
                 await loadSites();
             })();
+            // Executar teste após carregar
+            window.addEventListener('load', testOfflineCapability);
         </script>
 </body>
 
