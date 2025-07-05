@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciador de Ferramentas</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='8' fill='%234CAF50'/%3E%3Cpath d='M16 16h16v4H16zM16 24h16v4H16zM16 32h12v4H16z' fill='white'/%3E%3C/svg%3E">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#4CAF50">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,7 +42,7 @@
 
         .header h1 {
             font-size: 2.5em;
-            margin-bottom: 10px;
+            margin-bottom: 0px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
@@ -63,7 +65,7 @@
         .site-card {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
-            padding: 3px 3px 3px 7px;
+            padding: 9px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -94,7 +96,7 @@
         }
 
         .site-card h3 {
-            font-size: 1.5em;
+            font-size: 1.4em;
             margin-bottom: 10px;
             color: #4a5568;
         }
@@ -105,8 +107,10 @@
         }
 
         .site-actions {
+            margin-left: 11px;
             display: flex;
             gap: 10px;
+            justify-content: flex-start;
         }
 
         .btn {
@@ -281,7 +285,7 @@
 
         #clearSearch {
             position: absolute;
-            left: 13.3%;
+            left: 14.6%;
             top: 50%;
             transform: translateY(-50%);
             background: none;
@@ -367,10 +371,23 @@
             width: 30%;
         }
 
-
         @media (max-width: 768px) {
             .container {
                 padding: 15px;
+            }
+
+            .header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                /* ou qualquer cor de fundo para não sobrepor visualmente */
+                z-index: 1000;
+                /* garante que fique acima dos outros elementos */
+                padding: 10px 20px;
+                /* opcional */
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                /* opcional para dar um destaque */
             }
 
             .header h1 {
@@ -385,9 +402,9 @@
             .search-random-btn {
                 position: fixed;
                 bottom: 42%;
-                right: 81.9%;
-                width: 60px;
-                height: 60px;
+                right: 87.9%;
+                width: 30px;
+                height: 30px;
                 border-radius: 50%;
                 background: linear-gradient(45deg, #1e90ff, #3742fa);
                 border: none;
@@ -401,10 +418,10 @@
 
 
             .add-site-btn {
-                bottom: 93%;
-                right: 4%;
-                width: 50px;
-                height: 50px;
+                bottom: 32%;
+                right: 87.8%;
+                width: 30px;
+                height: 30px;
                 font-size: 20px;
             }
 
@@ -418,14 +435,7 @@
                 flex-direction: column;
             }
 
-            .sites-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 25px;
-                min-height: 200px;
-                max-height: 78vh;
-                overflow-y: auto;
-            }
+
 
             #clearSearch {
                 position: absolute;
@@ -444,7 +454,7 @@
             .site-card {
                 background: rgba(255, 255, 255, 0.95);
                 border-radius: 15px;
-                padding: 1px 1px 3px 61px;
+                padding: 7px 3px 7px 38px;
                 box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
                 backdrop-filter: blur(10px);
                 border: 1px solid rgba(255, 255, 255, 0.2);
@@ -475,37 +485,25 @@
                 font-family: 'Courier New', monospace;
                 resize: vertical;
             }
-            .search-random-btn,
-.add-site-btn {
-    position: fixed;
-    border-radius: 50%;
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-    box-shadow: 0 4px 20px rgba(30, 144, 255, 0.4);
-    transition: opacity 0.3s ease;
-    z-index: 1000;
-    opacity: 0;
-    pointer-events: none;
-}
 
-/* Específicos de cada botão */
-.search-random-btn {
-    bottom: 42%;
-    right: 81.9%;
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(45deg, #1e90ff, #3742fa);
-}
+            .grid-wrapper {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                /* começa do meio */
+                min-height: 89vh;
+                /* ocupa altura total da tela */
+            }
 
-.add-site-btn {
-    bottom: 31.8%;
-    right: 83.1%;
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(45deg, #2ed573, #1eaf60);
-}
+            .sites-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 25px;
+                min-height: 200px;
+                max-height: 78vh;
+                overflow-y: auto;
+            }
+
         }
     </style>
 </head>
@@ -520,9 +518,12 @@
             </div>
             <p></p>
         </div>
-        <div class="sites-grid" id="sitesGrid">
-            <!-- Sites serão carregados aqui -->
+        <div class="grid-wrapper">
+            <div class="sites-grid" id="sitesGrid">
+                <!-- Sites serão carregados aqui -->
+            </div>
         </div>
+
     </div>
 
 
@@ -610,6 +611,7 @@
             let sites = [];
             let currentSiteIndex = -1;
             let editingIndex = -1;
+            let lastOpenedSiteIndex = -1;
 
             // Carregar sites do armazenamento ou criar site exemplo
             async function loadSites() {
@@ -633,86 +635,26 @@
                                 description: "Ferramenta simples para contar cliques",
                                 code: `<!DOCTYPE html>
         <html lang="pt-BR">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Contador de Cliques</title>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    min-height: 100vh;
-                    margin: 0;
-                    background: linear-gradient(135deg, #74b9ff, #0984e3);
-                    color: white;
-                }
-                .container {
-                    text-align: center;
-                    background: rgba(255,255,255,0.1);
-                    padding: 40px;
-                    border-radius: 20px;
-                    backdrop-filter: blur(10px);
-                    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-                }
-                .counter {
-                    font-size: 4em;
-                    font-weight: bold;
-                    margin: 20px 0;
-                    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-                }
-                .btn {
-                    font-size: 1.2em;
-                    padding: 15px 30px;
-                    margin: 10px;
-                    border: none;
-                    border-radius: 50px;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                    font-weight: bold;
-                }
-                .btn-click {
-                    background: #00b894;
-                    color: white;
-                }
-                .btn-reset {
-                    background: #e17055;
-                    color: white;
-                }
-                .btn:hover {
-                    transform: translateY(-3px);
-                    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-                }
-            <\/style>
-        </head>
-        <body>
-            <div class="container">
-                <h1>🖱️ Contador de Cliques</h1>
-                <div class="counter" id="counter">0</div>
-                <button class="btn btn-click" onclick="incrementCounter()">Clique Aqui!</button>
-                <button class="btn btn-reset" onclick="resetCounter()">Resetar</button>
-            </div>
-            
-            <script>
-                let count = 0;
-                
-                function incrementCounter() {
-                    count++;
-                    document.getElementById('counter').textContent = count;
-                }
-                
-                function resetCounter() {
-                    count = 0;
-                    document.getElementById('counter').textContent = count;
-                }
-            <\/script>
+        }
+            <\/script>//quando tiver barras elas tem que ter / para funcionar
         </body>
         </html>`
+                                // ... coloque aqui o codigo html para sites exemplo
                             }];
                             saveSites(); // Salvar no IndexedDB
                         }
+
+                        // Carregar último site aberto DEPOIS de carregar os sites
+                        const savedLastOpened = localStorage.getItem('lastOpenedSiteIndex');
+                        if (savedLastOpened !== null) {
+                            const index = parseInt(savedLastOpened);
+                            if (index >= 0 && index < sites.length) {
+                                lastOpenedSiteIndex = index;
+                            }
+                        }
+
                         renderSites();
+
                     };
                 } catch (error) {
                     console.error('Erro ao carregar sites:', error);
@@ -754,11 +696,19 @@
 
             // Renderizar lista de sites
             function renderSites() {
+                console.log('Renderizando - lastOpenedSiteIndex:', lastOpenedSiteIndex);
                 const grid = document.getElementById('sitesGrid');
                 grid.innerHTML = '';
                 //modificaçao para mostrar os ultimos sites no topo da lista
-                sites.slice().reverse().forEach((site, originalIndex) => {
-                    const index = sites.length - 1 - originalIndex;
+                //modificaçao para mostrar os ultimos sites no topo da lista
+                let sitesToRender = sites.slice().reverse();
+                if (lastOpenedSiteIndex >= 0) {
+                    const lastOpenedSite = sites[lastOpenedSiteIndex];
+                    sitesToRender = sitesToRender.filter(site => site !== lastOpenedSite);
+                    sitesToRender.unshift(lastOpenedSite);
+                }
+                sitesToRender.forEach((site, originalIndex) => {
+                    const index = sites.indexOf(site);
                     const card = document.createElement('div');
                     card.className = 'site-card';
                     card.innerHTML = `
@@ -806,7 +756,16 @@
                     return;
                 }
                 //modificaçao para mostrar os ultimos sites adicionados ao topo da lista
-                filteredSites.slice().reverse().forEach((site) => {
+                //modificaçao para mostrar os ultimos sites adicionados ao topo da lista
+                let sitesToRender = filteredSites.slice().reverse();
+                if (lastOpenedSiteIndex >= 0) {
+                    const lastOpenedSite = sites[lastOpenedSiteIndex];
+                    if (filteredSites.includes(lastOpenedSite)) {
+                        sitesToRender = sitesToRender.filter(site => site !== lastOpenedSite);
+                        sitesToRender.unshift(lastOpenedSite);
+                    }
+                }
+                sitesToRender.forEach((site) => {
                     const originalIndex = sites.indexOf(site);
                     const card = document.createElement('div');
                     card.className = 'site-card';
@@ -826,6 +785,9 @@
             // Abrir site em tela cheia
             function openSite(index) {
                 currentSiteIndex = index;
+                lastOpenedSiteIndex = index;
+                localStorage.setItem('lastOpenedSiteIndex', index.toString());
+                console.log('Site aberto - índice:', index, 'nome:', sites[index].name);
                 const site = sites[index];
                 document.getElementById('fullscreenTitle').textContent = site.name;
                 //lazy loading para otimizaçao
@@ -841,6 +803,7 @@
             function closeFullscreen() {
                 document.getElementById('fullscreenOverlay').style.display = 'none';
                 currentSiteIndex = -1;
+                renderSites(); // Adicionar esta linha
             }
 
             // Abrir modal para adicionar site
@@ -878,6 +841,14 @@
                 const site = sites[index];
                 if (confirm(`Tem certeza que deseja excluir "${site.name}"?`)) {
                     sites.splice(index, 1);
+                    // Atualizar lastOpenedSiteIndex se necessário
+                    if (lastOpenedSiteIndex === index) {
+                        lastOpenedSiteIndex = -1;
+                        localStorage.removeItem('lastOpenedSiteIndex');
+                    } else if (lastOpenedSiteIndex > index) {
+                        lastOpenedSiteIndex--;
+                        localStorage.setItem('lastOpenedSiteIndex', lastOpenedSiteIndex.toString());
+                    }
                     saveSites();
                     renderSites();
                 }
@@ -928,9 +899,7 @@
                 }
             });
 
-
             //event listener para funçao de pesquisa
-            // Event listener para pesquisa
             let searchTimeout;
             document.getElementById('searchInput').addEventListener('input', function (e) {
                 const searchTerm = e.target.value;
@@ -1043,9 +1012,6 @@
                 }
             }
 
-
-
-
             //service worker para funcionamento offline
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function () {
@@ -1098,65 +1064,11 @@
             window.addEventListener('online', updateOnlineStatus);
             window.addEventListener('offline', updateOnlineStatus);
             updateOnlineStatus(); // Verificar status inicial
-            // Teste de funcionalidade offline
-            function testOfflineCapability() {
-                if ('serviceWorker' in navigator) {
-                    navigator.serviceWorker.ready.then(function () {
-                        console.log('✅ Service Worker ativo - Site pronto para funcionar offline');
-                    });
-                }
-
-                if ('indexedDB' in window) {
-                    console.log('✅ IndexedDB disponível - Dados salvos localmente');
-                }
-
-                console.log('✅ Site funcionará offline após primeira visita');
-            }
-            let inactivityTimer;
-    let hideDelayTimer;
-
-    const micButton = document.querySelector('.search-random-btn');
-    const addButton = document.querySelector('.add-site-btn');
-
-    function showButtons() {
-        [micButton, addButton].forEach(btn => {
-            btn.style.opacity = '1';
-            btn.style.pointerEvents = 'auto';
-        });
-    }
-
-    function hideButtons() {
-        [micButton, addButton].forEach(btn => {
-            btn.style.opacity = '0';
-            btn.style.pointerEvents = 'none';
-        });
-    }
-
-    function resetInactivityTimer() {
-        clearTimeout(inactivityTimer);
-        clearTimeout(hideDelayTimer);
-
-        // Aguarda 1s antes de esconder os botões, para permitir cliques
-        hideDelayTimer = setTimeout(hideButtons, 600);
-
-        // Aguarda 2s de inatividade para mostrar os botões novamente
-        inactivityTimer = setTimeout(showButtons, 2500);
-    }
-
-    // Escuta eventos de interação
-    ['touchstart', 'mousemove', 'scroll', 'keydown'].forEach(evt => {
-        document.addEventListener(evt, resetInactivityTimer, { passive: true });
-    });
-
-    window.addEventListener('load', resetInactivityTimer);
-            
             // Carregar sites ao iniciar
             // Mudança: fazer a chamada async
             (async () => {
                 await loadSites();
             })();
-            // Executar teste após carregar
-            window.addEventListener('load', testOfflineCapability);
         </script>
 </body>
 
