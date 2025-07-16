@@ -53,6 +53,7 @@
 
 
         .sites-grid {
+            padding: 5.3px;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
@@ -159,7 +160,10 @@
             transform: scale(1.1);
             box-shadow: 0 6px 25px rgba(255, 107, 107, 0.6);
         }
-
+        .search-random-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgb(14, 22, 255);
+        }
         .fullscreen-overlay {
             display: none;
             position: fixed;
@@ -418,11 +422,13 @@
 
 
             .add-site-btn {
+                
                 bottom: 32%;
                 right: 87.8%;
                 width: 30px;
                 height: 30px;
                 font-size: 20px;
+                box-shadow: 0 4px 20px rgba(255, 107, 107, 0.4);
             }
 
             .btnInExp {
@@ -496,6 +502,7 @@
             }
 
             .sites-grid {
+                padding: 0px;
                 display: grid;
                 grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
                 gap: 25px;
