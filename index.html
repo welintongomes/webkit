@@ -52,29 +52,29 @@
         }
 
 
-        .sites-grid {
-            padding: 5.3px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            min-height: 200px;
-            max-height: 71.7vh;
-            overflow-y: auto;
-        }
+.sites-grid {
+    padding: 5.3px 3px 10px 5px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    min-height: 200px;
+    max-height: 71.7vh;
+    overflow-y: auto;
+}
 
 
-        .site-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 9px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
+.site-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 9px;
+    box-shadow: 0 8px 6.8px rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
 
         .site-card::before {
             content: '';
@@ -115,6 +115,7 @@
         }
 
         .btn {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
             padding: 8px 16px;
             border: none;
             border-radius: 8px;
@@ -136,7 +137,7 @@
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         .add-site-btn {
@@ -457,18 +458,18 @@
                 font-weight: bold;
             }
 
-            .site-card {
-                background: rgba(255, 255, 255, 0.95);
-                border-radius: 15px;
-                padding: 7px 3px 7px 38px;
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-                backdrop-filter: blur(10px);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                cursor: pointer;
-                transition: all 0.3s ease;
-                position: relative;
-                overflow: hidden;
-            }
+.site-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 7px 3px 7px 38px;
+    box-shadow: 0 13px 10px rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
 
             #searchInput {
                 font-size: 20px;
@@ -501,15 +502,17 @@
                 /* ocupa altura total da tela */
             }
 
-            .sites-grid {
-                padding: 0px;
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 25px;
-                min-height: 200px;
-                max-height: 78vh;
-                overflow-y: auto;
-            }
+.sites-grid {
+    padding-bottom: 15px;
+    border-radius: 10px;
+    /* padding: 3px; */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    min-height: 200px;
+    max-height: 73vh;
+    overflow-y: auto;
+}
 
         }
     </style>
